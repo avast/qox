@@ -60,7 +60,7 @@ source .venv/bin/activate
 source .venv/bin/activate
 ```
 
-This demo version of qox has a little `setup.py` that defines the test dependencies and sets `qox` as an entry point. This means it can be used as a command line tool now. Simply running `qox` without arguments, will give you all tasks you can run.  As this is an extremely simple project with no hierarchy of libs and sub projects or something similar you might have in project that would integrate tox, there is only a top level `.qox` folder that contains what is needed to create a venv and run some linters and tests.
+This demo version of qox has a little `setup.py` that defines the test dependencies and sets `qox` as an entry point. This means it can be used as a command line tool now. Simply running `qox` without arguments, will give you all tasks you can run.  As this is an extremely simple project with no hierarchy of libs and sub projects or something similar you might have in a codebase that would integrate `qox`, there is only a top level `.qox` folder that contains what is needed to create a venv and run some linters and tests.
 
 All functionality worth talking about, is in the tasks, which are specific to the codebase qox is integrated into. These simple uses here, can give an idea, what it could be used for (and much more).
 
