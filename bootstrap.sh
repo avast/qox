@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 .qox/dev.sh
-
-echo "HINT: activate venv with ..."
-echo "source .venv/bin/activate"

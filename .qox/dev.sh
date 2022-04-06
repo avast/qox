@@ -5,5 +5,9 @@
 set -xe
 
 rm -rf .venv
-python3.10 -m venv .venv
+python3.10 -m venv --prompt "qox@$(pwd)/.venv" .venv
 .venv/bin/pip install --editable ".[lint,test]"
+
+set +x
+echo "HINT: activate venv with ..."
+echo "source .venv/bin/activate"
