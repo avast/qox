@@ -4,77 +4,6 @@
 
 A minimalistic, single file, zero dependency automation task runner to bundle project automation and unify command line and CI use for Python projects.
 
-## Example - using qox to test itself
-
-```text
-ob@xyz:~/[...]/qox$ ./bootstrap.sh 
-+ rm -rf .venv
-+ python3.10 -m venv .venv
-+ .venv/bin/pip install --editable '.[lint,test]'
-[...]
-Successfully installed [...]
-HINT: activate venv with ...
-source .venv/bin/activate
-```
-```text
-source .venv/bin/activate
-```
-
-```text
-ob@xyz:~/.../qox$ qox
-💯 ✨ qox - quality out of the box  - available tasks ✨ 💯
-  🏃 dev (ensure dev environment is in good shape)
-      always create a fresh venv
-  🏃 lint (run linters)
-  🏃 test (run tests)
-```
-
-```text
-(.venv) ob@xyz:~/[...]/qox$ qox lint
-<qox_pkg.qox:run(195) INFO> lint
-[definition]
-  #!/usr/bin/env bash
-  # CHANGEDIR: ROOT
-  # HELP: run linters
-  set -xe
-
-  black qox_pkg/qox.py tests
-  mypy qox_pkg/qox.py
-
-<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/lint.sh'
-+ black qox_pkg/qox.py tests
-All done! ✨ 🍰 ✨
-16 files left unchanged.
-+ mypy qox_pkg/qox.py
-Success: no issues found in 1 source file
-```
-
-```text
-(.venv) ob@xyz:~/[...]/qox$ qox test
-<qox_pkg.qox:run(195) INFO> test
-[definition]
-  #!/usr/bin/env bash
-  # CHANGEDIR: ROOT
-  # HELP: run tests
-  set -e
-
-  source .venv/bin/activate
-
-  set -x
-  pytest -l tests
-
-<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/test.sh'
-+ pytest -l tests
-=============================== test session starts ================================
-platform linux -- Python 3.10.0, pytest-7.1.1, pluggy-1.0.0
-rootdir: ~/[...]/qox
-collected 24 items                                                                                                                                                   
-tests/test_qox.py ........................                                    [100%]
-
-================================ 24 passed in 0.09s ================================
-```
-
-
 ## Is this for you?
 
 If you are a developer working on internal Python projects with a set of requirements where the established open source automation solutions are not a good fit or maybe just too much, `qox` might be a simple way to add automation (or consolidate existing automation) without much overhead.
@@ -110,6 +39,84 @@ If all these don't quite fit the bill and the following features and non-feature
     * changing the logging / chattyness level as preferred
     * add argparse, fire, plumbum, click or whatever you are already using in the rest of your project to add a proper command line parser and add more command line options
     * for non python scripts - add `<root>/.qox/_qox_eval_context.py` to inject needed objects for evaluations, e.g. if and where a task should be run (`RUNNABLE`, `CHANGEDIR`).
+
+## Example: using qox to lint and test itself
+
+To get started, a virtual environment with qox and test dependencies is needed:
+
+```text
+ob@xyz:~/[...]/qox$ ./bootstrap.sh 
++ .qox/dev.sh
++ rm -rf .venv
++ python3.10 -m venv .venv
++ .venv/bin/pip install --editable '.[lint,test]'
+[...]
+Successfully installed [...]
+HINT: activate venv with ...
+source .venv/bin/activate
+```
+
+```text
+source .venv/bin/activate
+```
+
+This demo version of qox has a little `setup.py` that defines the test dependencies and sets `qox` as an entry point. This means it can be used as a command line tool now. Simply running `qox` without arguments, will give you all tasks you can run.  As this is an extremely simple project with no hierarchy of libs and sub projects or something similar you might have in project that would integrate tox, there is only a top level `.qox` folder that contains what is needed to create a venv and run some linters and tests.
+
+All functionality worth talking about, is in the tasks, which are specific to the codebase qox is integrated into. These simple uses here, can give an idea, what it could be used for (and much more).
+
+```text
+(qox@~/.../qox/.venv) ob@xyz:~/.../qox$ qox
+💯 ✨ qox - quality out of the box  - available tasks ✨ 💯
+  🏃 dev (ensure dev environment is in good shape)
+      always create a fresh venv
+  🏃 lint (run linters)
+  🏃 test (run tests)
+```
+
+```text
+(qox@~/.../qox/.venv) ob@xyz:~/[...]/qox$ qox lint
+<qox_pkg.qox:run(195) INFO> lint
+[definition]
+  #!/usr/bin/env bash
+  # CHANGEDIR: ROOT
+  # HELP: run linters
+  set -xe
+
+  black qox_pkg/qox.py tests
+  mypy qox_pkg/qox.py
+
+<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/lint.sh'
++ black qox_pkg/qox.py tests
+All done! ✨ 🍰 ✨
+16 files left unchanged.
++ mypy qox_pkg/qox.py
+Success: no issues found in 1 source file
+```
+
+```text
+(qox@~/.../qox/.venv) ob@xyz:~/[...]/qox$ qox test
+<qox_pkg.qox:run(195) INFO> test
+[definition]
+  #!/usr/bin/env bash
+  # CHANGEDIR: ROOT
+  # HELP: run tests
+  set -e
+
+  source .venv/bin/activate
+
+  set -x
+  pytest -l tests
+
+<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/test.sh'
++ pytest -l tests
+=============================== test session starts ================================
+platform linux -- Python 3.10.0, pytest-7.1.1, pluggy-1.0.0
+rootdir: ~/[...]/qox
+collected 24 items                                                                                                                                                   
+tests/test_qox.py ........................                                    [100%]
+
+================================ 24 passed in 0.09s ================================
+```
 
 ## FAQ
 
