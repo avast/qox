@@ -46,11 +46,11 @@ If all these don't quite fit the bill and the following features and non-feature
 
 ## NOTES
 
-## Steal This Code
+### Steal This Code
 
 This code is very likely only useful for internal projects. Although qox is pip-installable (but not published on pypi.org) and could be used "as-is" it is much more likely that you will just grab qox.py copy it into your project and "make it yours" in the ways described above.
 
-# Where is the documentation?
+### Where is the documentation?
 
 As you are supposed to steal the code and make it your own, you need to understand what it does anyway, so best is: read the source. No really, it's a tiny file. Also run and read the tests to see how it works.
 
