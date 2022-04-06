@@ -136,7 +136,7 @@ The way the `qox` grows and changes is then up to you and the needs of your proj
 
 ### Where is the documentation?
 
-As you are supposed to steal the code and make it your own, you need to understand what it does anyway, so best is: read the source. No really, it's a tiny file. Also run and read the tests to see how it works.
+As you are supposed to steal the code and make it your own, you need to understand what it does anyway, so best is: read the source. No really, it's a [tiny file](./qox_pkg/qox.py). Also run and read the tests to see how it works.
 
 ### Why is this Python 3.10+?
 
