@@ -3,5 +3,5 @@
 # HELP: run linters
 set -xe
 
-black qox.py tests
-mypy qox.py
+black qox_pkg/qox.py tests
+mypy qox_pkg/qox.py

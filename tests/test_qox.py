@@ -5,7 +5,7 @@ from typing import Generator
 
 import pytest
 
-from qox import (
+from qox_pkg.qox import (
     QoxTaskFinder,
     QoxTask,
     QoxTaskFailedError,

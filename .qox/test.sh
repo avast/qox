@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # CHANGEDIR: ROOT
 # HELP: run tests
-set -xe
+set -e
 
-PYTHONPATH=. .venv/bin/pytest -l tests
+source .venv/bin/activate
+
+set -x
+pytest -l tests
