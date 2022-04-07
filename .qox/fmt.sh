@@ -4,4 +4,3 @@
 set -xe
 
 black qox_pkg/qox.py tests
-mypy qox_pkg/qox.py

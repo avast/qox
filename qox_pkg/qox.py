@@ -228,12 +228,10 @@ class ShellTask(QoxTask):
     @property
     def CHANGEDIR(self) -> Path | None:
         changedir = self._evaluate_criterion("CHANGEDIR")
-        if not changedir:
+        if not changedir or changedir == Path.cwd():
             return None
 
         assert isinstance(changedir, Path), changedir
-        if changedir == Path.cwd():
-            return None
         assert changedir.is_dir(), f"{changedir} is not an existing directory."
         return changedir
 
@@ -278,8 +276,6 @@ class ShellTask(QoxTask):
                 qontext_module = import_python_module(context_path)
                 globals_dict.update(vars(qontext_module))
             return eval(match[1], globals_dict)
-
-        return None
 
 
 class PythonTask(QoxTask):
