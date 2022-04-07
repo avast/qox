@@ -122,50 +122,6 @@ All done! ✨ 🍰 ✨
 
 
   def qox(args: list[str]) -> None:
-(qox@~/[...]/qox/.venv) ob@LAHP97DB3:~/air/air/qox$ qox all
-<qox_pkg.qox:run(198) INFO> all
-[definition]
-  #!/usr/bin/env bash
-  # CHANGEDIR: ROOT
-  # HELP: run all quality tools, crash early
-  set -xe
-
-  qox fmt
-  qox types
-  qox test
-
-<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/all.sh'
-+ qox fmt
-<qox_pkg.qox:run(198) INFO> fmt
-[definition]
-  #!/usr/bin/env bash
-  # CHANGEDIR: ROOT
-  # HELP: run black
-  set -xe
-
-  black qox_pkg/qox.py tests
-
-<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/fmt.sh'
-+ black qox_pkg/qox.py tests
-All done! ✨ 🍰 ✨
-16 files left unchanged.
-+ qox types
-<qox_pkg.qox:run(198) INFO> types
-[definition]
-  """run mypy over qox.py"""
-  import logging
-  import os
-  import sys
-  import timeit
-  from pathlib import Path
-  from pprint import pformat
-
-  LOG = logging.getLogger("qox-types")
-  HERE = Path(__file__).parent
-  CHANGEDIR = HERE.parent
-
-
-  def qox(args: list[str]) -> None:
       from mypy import api
 
       start = timeit.default_timer()
