@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # CHANGEDIR: ROOT
-# HELP: run linters
+# HELP: run black
 set -xe
 
 black qox_pkg/qox.py tests

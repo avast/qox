@@ -1,3 +1,4 @@
+"""run mypy over qox.py"""
 import logging
 import os
 import sys

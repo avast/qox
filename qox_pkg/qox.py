@@ -60,6 +60,8 @@ def main() -> None:
 
 
 class QoxTaskFinder:
+    _IGNORED_EXTENSIONS = [".ini"]
+
     def __init__(self) -> None:
         self.paths = self._find_qox_paths()
         self.handler_classes = self._collect_handler_classes()
@@ -111,7 +113,8 @@ class QoxTaskFinder:
 
             handler_class = self.handler_classes.get(q.suffix)
             if not handler_class:
-                LOG.warning(f"[IGNORE] no task handler for {q}")
+                if q.suffix not in self._IGNORED_EXTENSIONS:
+                    LOG.warning(f"[IGNORE] no task handler for {q}")
                 continue
 
             task = handler_class(q, self.ROOT)

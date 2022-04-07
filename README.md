@@ -65,57 +65,147 @@ This demo version of qox has a little `setup.py` that defines the test dependenc
 All functionality worth talking about, is in the tasks, which are specific to the codebase qox is integrated into. These simple uses here, can give an idea, what it could be used for (and much more).
 
 ```text
-(qox@~/.../qox/.venv) ob@xyz:~/.../qox$ qox
 💯 ✨ qox - quality out of the box  - available tasks ✨ 💯
+  🏃 all (run all quality tools, crash early)
   🏃 dev (ensure dev environment is in good shape)
       always create a fresh venv
-  🏃 lint (run linters)
-  🏃 test (run tests)
+  🏃 fmt (run black)
+  🏃 test (run pytest)
+  🏃 types (run mypy over qox.py)
 ```
 
+To run all quality tools, I added a little meta task (`qox all`) that runs all the qox tasks needed:
+
 ```text
-(qox@~/.../qox/.venv) ob@xyz:~/[...]/qox$ qox lint
-<qox_pkg.qox:run(195) INFO> lint
+(qox@~/.../qox/.venv) ob@xyz:~/[...]/qox$ qox all
+<qox_pkg.qox:run(198) INFO> all
 [definition]
   #!/usr/bin/env bash
   # CHANGEDIR: ROOT
-  # HELP: run linters
+  # HELP: run all quality tools, crash early
+  set -xe
+
+  qox fmt
+  qox types
+  qox test
+
+<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/all.sh'
++ qox fmt
+<qox_pkg.qox:run(198) INFO> fmt
+[definition]
+  #!/usr/bin/env bash
+  # CHANGEDIR: ROOT
+  # HELP: run black
   set -xe
 
   black qox_pkg/qox.py tests
-  mypy qox_pkg/qox.py
 
-<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/lint.sh'
+<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/fmt.sh'
 + black qox_pkg/qox.py tests
 All done! ✨ 🍰 ✨
 16 files left unchanged.
-+ mypy qox_pkg/qox.py
-Success: no issues found in 1 source file
-```
++ qox types
+<qox_pkg.qox:run(198) INFO> types
+[definition]
+  """run mypy over qox.py"""
+  import logging
+  import os
+  import sys
+  import timeit
+  from pathlib import Path
+  from pprint import pformat
 
-```text
-(qox@~/.../qox/.venv) ob@xyz:~/[...]/qox$ qox test
-<qox_pkg.qox:run(195) INFO> test
+  LOG = logging.getLogger("qox-types")
+  HERE = Path(__file__).parent
+  CHANGEDIR = HERE.parent
+
+
+  def qox(args: list[str]) -> None:
+(qox@~/[...]/qox/.venv) ob@LAHP97DB3:~/air/air/qox$ qox all
+<qox_pkg.qox:run(198) INFO> all
 [definition]
   #!/usr/bin/env bash
   # CHANGEDIR: ROOT
-  # HELP: run tests
-  set -e
+  # HELP: run all quality tools, crash early
+  set -xe
 
-  source .venv/bin/activate
+  qox fmt
+  qox types
+  qox test
 
-  set -x
+<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/all.sh'
++ qox fmt
+<qox_pkg.qox:run(198) INFO> fmt
+[definition]
+  #!/usr/bin/env bash
+  # CHANGEDIR: ROOT
+  # HELP: run black
+  set -xe
+
+  black qox_pkg/qox.py tests
+
+<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/fmt.sh'
++ black qox_pkg/qox.py tests
+All done! ✨ 🍰 ✨
+16 files left unchanged.
++ qox types
+<qox_pkg.qox:run(198) INFO> types
+[definition]
+  """run mypy over qox.py"""
+  import logging
+  import os
+  import sys
+  import timeit
+  from pathlib import Path
+  from pprint import pformat
+
+  LOG = logging.getLogger("qox-types")
+  HERE = Path(__file__).parent
+  CHANGEDIR = HERE.parent
+
+
+  def qox(args: list[str]) -> None:
+      from mypy import api
+
+      start = timeit.default_timer()
+      args = args if args else ["qox_pkg/qox.py"]
+      args = ["--config-file", str(HERE / "mypy.ini")] + args
+      LOG.info(f"run mypy in {os.getcwd()}:\n{pformat(args)}")
+      out, err, ret = api.run(args)
+      end = timeit.default_timer()
+      print(f"mypy needed {(end - start):.2f} seconds")
+      if out:
+          print(f"{out}")
+      if err:
+          print(f"[stderr]{err}")
+      if ret:
+          sys.exit(f"FATAL: failed with code {ret}")
+
+<qox-types:qox(20) INFO> run mypy in ~/[...]/qox:
+['--config-file', '~/[...]/qox/.qox/mypy.ini', 'qox_pkg/qox.py']
+mypy needed 0.10 seconds
+Success: no issues found in 1 source file
+
++ qox test
+<qox_pkg.qox:run(198) INFO> test
+[definition]
+  #!/usr/bin/env bash
+  # CHANGEDIR: ROOT
+  # HELP: run pytest
+  set -xe
+
   pytest -l tests
 
-<qox_pkg.qox:_run(257) DEBUG> full command: '~/[...]/qox/.qox/test.sh'
+<qox_pkg.qox:_run(258) DEBUG> full command: '~/[...]/qox/.qox/test.sh'
 + pytest -l tests
-=============================== test session starts ================================
+===================== test session starts ======================
 platform linux -- Python 3.10.0, pytest-7.1.1, pluggy-1.0.0
 rootdir: ~/[...]/qox
 collected 24 items                                                                                                                                                   
-tests/test_qox.py ........................                                    [100%]
 
-================================ 24 passed in 0.09s ================================
+tests/test_qox.py ........................                [100%]
+
+====================== 24 passed in 0.10s ======================
 ```
 
 ## FAQ
