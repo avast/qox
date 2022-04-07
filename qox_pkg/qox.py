@@ -283,7 +283,7 @@ class ShellTask(QoxTask):
 
 
 class PythonTask(QoxTask):
-    """A python module. Can use the full power of the vision framework."""
+    """A python module. Can use all project knowledge."""
 
     EXTENSION = ".py"
     _RUNNER_FUNCTION_NAME = "qox"
