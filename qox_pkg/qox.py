@@ -170,7 +170,7 @@ class QoxTask:
 
     @property
     def HELP(self) -> str:
-        """Text that will be printed along the task, when calling calling for help."""
+        """Text that will be printed along the task, when calling for help."""
         raise NotImplementedError
 
     @property
