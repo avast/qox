@@ -178,7 +178,7 @@ class QoxTask:
         """Is the task runnable in the current context?"""
         raise NotImplementedError
 
-    def run(self, args: list[str] = None) -> None:
+    def run(self, args: list[str] | None = None) -> None:
         """Shared wrapper for all _run methods."""
         if not self.RUNNABLE:
             raise QoxTaskFailedError(f"\n{self.as_text}\n => task not RUNNABLE")
