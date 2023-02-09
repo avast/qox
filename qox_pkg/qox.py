@@ -1,5 +1,5 @@
 """qox - quality out of the box."""
-# Copyright (c) 2022 Oliver Bestwalter
+# Copyright (c) Oliver Bestwalter
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
