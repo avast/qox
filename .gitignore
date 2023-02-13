@@ -1,2 +1,5 @@
 TODO.md
 .venv
+*.egg-info
+.mypy_cache
+.pytest_cache
