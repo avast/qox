@@ -10,10 +10,12 @@ If you are a developer working on internal Python projects with a set of require
 
 Before you even consider going down this route, please ensure that you are aware of the following projects and have already ruled them out:
 
-* [tox](https://tox.wiki)
-* [nox](https://nox.thea.codes/)
 * [invoke](https://www.pyinvoke.org/)
 * [pants](https://www.pantsbuild.org/) (for monorepos)
+* [poe the poet](https://poethepoet.natn.io/)
+* [poetry](https://python-poetry.org/)
+* [nox](https://nox.thea.codes/)
+* [tox](https://tox.wiki)
 
 If all these don't quite fit the bill and the following features and non-features sound not completely off, then the qox minimalist approach might be for you.
 
