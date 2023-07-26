@@ -1,6 +1,6 @@
 # `qox` - quality out of the box
 
-*(pronounced like: kyox ('k' as in cool, 'y' as in yes, 'o' as in otter, and 'x' as in Xena: Warrior Princess))*
+*(pronounced like: kyox ('k' as in cool, 'y' as in yes, 'o' as in otter, and 'x' as in x-ray (not as in Xena: Warrior Princess))*
 
 A minimalistic, single file, zero dependency automation task runner to bundle project automation and unify command line and CI use for Python projects.
 
